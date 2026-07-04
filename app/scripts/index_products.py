@@ -3,7 +3,12 @@
 Chạy: `python -m app.scripts.index_products`
 """
 
+import sys
 from typing import Any
+
+# Console Windows mặc định là cp1252, không in được tiếng Việt -> ép UTF-8.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
 from app.firebase_init import init_firebase
 from app.services import vector_store

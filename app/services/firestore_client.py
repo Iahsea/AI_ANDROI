@@ -19,13 +19,8 @@ def _to_product_dict(doc: Any) -> dict[str, Any] | None:
     if raw_id is None or title is None:
         return None
 
-    try:
-        product_id = int(raw_id)
-    except (TypeError, ValueError):
-        return None
-
     return {
-        "id": product_id,
+        "id": str(raw_id),
         "title": str(title),
         "description": str(data.get("description", "")),
         "category": str(data.get("category", "")),

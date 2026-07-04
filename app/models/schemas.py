@@ -13,7 +13,7 @@ class ChatRequest(BaseModel):
 class ReferencedProduct(BaseModel):
     """Sản phẩm được tham chiếu, trả về cho app hiển thị card."""
 
-    id: int
+    id: str
     title: str
     price: float
     image: str

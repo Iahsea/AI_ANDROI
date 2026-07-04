@@ -78,7 +78,7 @@ def count() -> int:
 def _normalize_metadata(product_id: Any, metadata: dict[str, Any]) -> dict[str, Any]:
     """Chuẩn hoá metadata về đúng kiểu ChromaDB chấp nhận (str/int/float/bool)."""
     return {
-        "id": int(product_id),
+        "id": str(product_id),
         "title": str(metadata.get("title", "")),
         "price": float(metadata.get("price", 0) or 0),
         "image": str(metadata.get("image", "")),

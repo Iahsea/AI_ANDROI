@@ -10,7 +10,8 @@ class Settings(BaseSettings):
 
     # Google Generative AI
     google_api_key: str
-    gemini_model: str = "gemini-2.0-flash"
+    gemini_model: str = "gemini-2.5-flash"
+    embedding_model: str = "models/gemini-embedding-001"
 
     # Firebase
     # Để trống -> dùng Application Default Credentials (vd: Cloud Run).

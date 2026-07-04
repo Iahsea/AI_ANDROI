@@ -34,7 +34,7 @@ def chat(
 
     referenced = [
         ReferencedProduct(
-            id=int(p["id"]),
+            id=str(p["id"]),
             title=str(p.get("title", "")),
             price=float(p.get("price", 0) or 0),
             image=str(p.get("image", "")),

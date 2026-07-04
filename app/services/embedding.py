@@ -4,8 +4,6 @@ import google.generativeai as genai
 
 from app.config import get_settings
 
-EMBEDDING_MODEL = "models/text-embedding-004"
-
 _configured = False
 
 
@@ -26,7 +24,7 @@ def embed_text(text: str, *, task_type: str = "retrieval_query") -> list[float]:
     """
     _ensure_configured()
     result = genai.embed_content(
-        model=EMBEDDING_MODEL,
+        model=get_settings().embedding_model,
         content=text,
         task_type=task_type,
     )
@@ -37,7 +35,7 @@ def embed_documents(texts: list[str]) -> list[list[float]]:
     """Tạo embedding cho nhiều document (dùng khi index sản phẩm)."""
     _ensure_configured()
     result = genai.embed_content(
-        model=EMBEDDING_MODEL,
+        model=get_settings().embedding_model,
         content=texts,
         task_type="retrieval_document",
     )

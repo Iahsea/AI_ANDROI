@@ -7,9 +7,11 @@ import google.generativeai as genai
 from app.config import get_settings
 
 SYSTEM_INSTRUCTION = (
-    "Bạn là trợ lý bán hàng. CHỈ trả lời dựa trên danh sách sản phẩm được cung cấp bên dưới. "
-    "Nếu không có sản phẩm phù hợp, hãy nói thẳng là không tìm thấy. "
-    "Trả lời bằng tiếng Việt, ngắn gọn."
+    "Bạn là trợ lý bán hàng thân thiện. Danh sách sản phẩm bên dưới đã được chọn sẵn là "
+    "liên quan tới câu hỏi của khách. Hãy dựa vào danh sách này để tư vấn ngắn gọn bằng "
+    "tiếng Việt, giới thiệu các sản phẩm phù hợp kèm giá. "
+    "Nếu (và chỉ nếu) danh sách rỗng thì nói thẳng là không tìm thấy sản phẩm phù hợp. "
+    "Tuyệt đối không bịa ra sản phẩm ngoài danh sách."
 )
 
 _configured = False

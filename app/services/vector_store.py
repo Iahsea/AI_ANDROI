@@ -54,6 +54,9 @@ def upsert(items: list[dict[str, Any]]) -> None:
 def query(text: str, top_k: int) -> list[dict[str, Any]]:
     """Trả về các sản phẩm gần nhất với `text`, kèm metadata.
 
+    Chỉ giữ sản phẩm có khoảng cách cosine <= `relevance_max_distance` (config)
+    để tránh trả sản phẩm không liên quan khi không có gì thực sự khớp.
+
     Kết quả mỗi phần tử: {id, title, price, image, category}.
     """
     collection = _get_collection()
@@ -64,10 +67,18 @@ def query(text: str, top_k: int) -> list[dict[str, Any]]:
     result = collection.query(
         query_embeddings=[query_embedding],
         n_results=top_k,
+        include=["metadatas", "distances"],
     )
 
-    metadatas = result.get("metadatas") or [[]]
-    return [dict(meta) for meta in metadatas[0]]
+    metadatas = (result.get("metadatas") or [[]])[0]
+    distances = (result.get("distances") or [[]])[0]
+    max_distance = get_settings().relevance_max_distance
+
+    items: list[dict[str, Any]] = []
+    for meta, dist in zip(metadatas, distances):
+        if dist is None or dist <= max_distance:
+            items.append(dict(meta))
+    return items
 
 
 def count() -> int:

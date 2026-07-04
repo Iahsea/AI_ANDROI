@@ -22,6 +22,10 @@ class Settings(BaseSettings):
 
     # RAG
     top_k: int = 5
+    # Ngưỡng khoảng cách cosine tối đa để coi sản phẩm là "liên quan".
+    # Vector xa hơn ngưỡng này bị loại (tránh trả sản phẩm rác khi không có gì khớp).
+    # Đã hiệu chỉnh cho gemini-embedding-001 + dữ liệu hiện tại; chỉnh lại nếu đổi model.
+    relevance_max_distance: float = 0.33
 
     model_config = SettingsConfigDict(
         env_file=".env",

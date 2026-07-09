@@ -51,6 +51,13 @@ def upsert(items: list[dict[str, Any]]) -> None:
     collection.upsert(ids=ids, embeddings=embeddings, metadatas=metadatas)
 
 
+def delete(ids: list[str]) -> None:
+    """Xóa vector theo id. Id không tồn tại được ChromaDB bỏ qua (idempotent)."""
+    if not ids:
+        return
+    _get_collection().delete(ids=[str(i) for i in ids])
+
+
 def query(text: str, top_k: int) -> list[dict[str, Any]]:
     """Trả về các sản phẩm gần nhất với `text`, kèm metadata.
 

@@ -4,7 +4,6 @@ Chạy: `python -m app.scripts.index_products`
 """
 
 import sys
-from typing import Any
 
 # Console Windows mặc định là cp1252, không in được tiếng Việt -> ép UTF-8.
 if hasattr(sys.stdout, "reconfigure"):
@@ -12,23 +11,10 @@ if hasattr(sys.stdout, "reconfigure"):
 
 from app.firebase_init import init_firebase
 from app.services import vector_store
-from app.services.firestore_client import fetch_all_products
+from app.services.firestore_client import build_index_text, fetch_all_products
 
 # Chroma upsert theo lô để tránh gọi embedding quá lớn một lần.
 BATCH_SIZE = 50
-
-
-def _build_index_text(product: dict[str, Any]) -> str:
-    """Ghép title + description + category thành text để embed."""
-    return " ".join(
-        part
-        for part in (
-            product.get("title", ""),
-            product.get("description", ""),
-            product.get("category", ""),
-        )
-        if part
-    ).strip()
 
 
 def main() -> None:
@@ -46,7 +32,7 @@ def main() -> None:
         items = [
             {
                 "id": p["id"],
-                "text": _build_index_text(p),
+                "text": build_index_text(p),
                 "metadata": {
                     "title": p["title"],
                     "price": p["price"],

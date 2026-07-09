@@ -30,3 +30,16 @@ class HealthResponse(BaseModel):
     """Response của GET /health."""
 
     status: str = "ok"
+
+
+class ProductSyncRequest(BaseModel):
+    """Body của POST /products/index — app chỉ gửi id (xem hợp đồng)."""
+
+    id: str = Field(..., min_length=1, description="Document id sản phẩm trong Firestore.")
+
+
+class SyncResponse(BaseModel):
+    """Response chung của các endpoint sync sản phẩm."""
+
+    status: str = "ok"
+    id: str

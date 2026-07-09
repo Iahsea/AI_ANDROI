@@ -5,7 +5,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from app.firebase_init import init_firebase
-from app.routers import chat
+from app.routers import chat, products
 
 
 @asynccontextmanager
@@ -17,3 +17,4 @@ async def lifespan(_app: FastAPI):
 
 app = FastAPI(title="RAG Chatbot Service", version="1.0.0", lifespan=lifespan)
 app.include_router(chat.router)
+app.include_router(products.router)
